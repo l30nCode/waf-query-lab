@@ -21,6 +21,7 @@ A prototype environment for methodology of HTTP/1.1, QUERY and WAF analysis.
 - **ModSecurity** 3.0.16
 - **ModSecurity-nginx** 1.0.4
 - **OWASP CRS** 3.3.10
+- **Container image:** `owasp/modsecurity-crs:nginx@sha256:ccec5e3ecd1dcf6b48903268f4fe415fd17914e8bf30fc21263fd05cc7045f29`
 
 ### Attack Classes:
 
@@ -192,6 +193,24 @@ Die XSS-Tests belegen die Erkennung und Blockierung der Payloads durch die WAF, 
 172.19.0.1 - - [03/Oct/2026:08:22:25 +0000] "QUERY /search HTTP/1.1" 200 267 "-" "curl/8.21.0" "-"
 ```
 
+**The following Audit-Log delivers more precise processing information of the benign QUERY-Request**
+```text
+2026-10-03 11:41:26
+```
+
+```text
+172.19.0.1 - - [03/Oct/2026:09:41:26 +0000] "QUERY /search HTTP/1.1" 200 267 "-" "curl/8.21.0" "-"
+2026-10-03 11:41:26
+```
+
+```text
+{"transaction":{"client_ip":"172.19.0.1","time_stamp":"Sat Oct  3 09:41:26 2026","server_id":"57f0466c74f66bff14231a0eb39806c36f88df69","client_port":43430,"host_ip":"172.19.0.2","host_port":8080,"unique_id":"179102048678.486973","is_interrupted":false,"request":{"method":"QUERY","http_version":"1.1","hostname":"localhost","uri":"/search","headers":{"Host":"localhost:8080","User-Agent":"curl/8.21.0","Accept":"*/*","Content-Type":"application/json","Content-Length":"10"}},"response":{"body":"","http_code":200,"headers":{"Server":"nginx\u0000","Date":"Sat, 03 Oct 2026 09:41:26 GMT","Content-Length":"267","Content-Type":"application/json","Connection":"keep-alive","Access-Control-Allow-Headers":"*"}},"producer":{"modsecurity":"ModSecurity v3.0.16 (Linux)","connector":"ModSecurity-nginx v1.0.4","secrules_engine":"Enabled","components":["OWASP_CRS/3.3.10\""]},"messages":[]}}
+2026-10-03 11:41:26
+```
+
+```text
+{"transaction":{"client_ip":"127.0.0.1","time_stamp":"Sat Oct  3 09:41:26 2026","server_id":"57f0466c74f66bff14231a0eb39806c36f88df69","client_port":50246,"host_ip":"127.0.0.1","host_port":8443,"unique_id":"179102048637.851910","is_interrupted":false,"request":{"method":"GET","http_version":"2.0","hostname":"localhost","uri":"/healthz","headers":{"user-agent":"healthcheck","accept":"*/*","host":"localhost:8443"}},"response":{"body":"OK","http_code":200,"headers":{"Server":"nginx\u0000","Date":"Sat, 03 Oct 2026 09:41:26 GMT","Content-Length":"2","Content-Type":"application/octet-stream","Content-Type":"text/plain","Connection":"close"}},"producer":{"modsecurity":"ModSecurity v3.0.16 (Linux)","connector":"ModSecurity-nginx v1.0.4","secrules_engine":"Enabled","components":["OWASP_CRS/3.3.10\""]},"messages":[]}}
+```
 
 ##### 3.2 - QUERY sqli:
 ```text

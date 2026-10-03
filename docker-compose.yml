@@ -2,9 +2,10 @@ version: "3.9"
 
 services:
   modsecurity-crs:
-    image:  owasp/modsecurity-crs:nginx
+    image: owasp/modsecurity-crs:nginx@sha256:ccec5e3ecd1dcf6b48903268f4fe415fd17914e8bf30fc21263fd05cc7045f29
     ports:
       - "8080:8080"
     environment:
       - BACKEND=http://host.docker.internal:5000
       - ALLOWED_METHODS=GET HEAD POST OPTIONS QUERY
+      - MODSEC_AUDIT_ENGINE=On
